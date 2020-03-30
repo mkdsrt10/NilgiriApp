@@ -1,2 +1,2 @@
 # NilgiriApp
-home-page code stage 1
+home-page code stage 2
