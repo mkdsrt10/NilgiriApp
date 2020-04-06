@@ -1,227 +1,436 @@
-import 'react-native-gesture-handler'
-import { SafeAreaProvider } from 'react-native-safe-area-context'
-import React, { Component } from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Image,
-  Dimensions,
-  PixelRatio,
-  ImageBackground
-} from 'react-native';
-import { Appbar, Badge, IconButton, Button, AppbarBottom } from 'material-bread';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs'
-import A from 'react-native-a'
-import {NavigationContainer} from '@react-navigation/native'
+import React,{Component} from 'react';
+import {  ScrollView,Image,StatusBar,Platform,TouchableNativeFeedback,FlatList, StyleSheet, Text ,View,TouchableWithoutFeedback} from 'react-native';
 
-var a1
 
-async function main(){
-const {GoogleSpreadsheet} = require('google-spreadsheet')
-const doc = new GoogleSpreadsheet('1BtzptxQARvcTmY8M1OilCnciqD1JBEJkQ_--L5T1Ols')
-await doc.useServiceAccountAuth({
-    client_email: 'mydata@mydata-272704.iam.gserviceaccount.com',
-    private_key: 'MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCviPqWCV7WNZnA\nhVJTVMvAemOj5Fo151VQ1nH21eUDxZOnkuCyzEPpT4FTvQtkUZPBt0Yu4RYHoUTs\nwan+sguwWRSiTN9eS5ISJy54YdBAKB3mq/Rrdm3LK1qqh5IMZLIVars28xFOCXor\nDa8z7h9Lnq/Cl8z2M/2juJy1HNn7g5t8UPlKeM7EYsvG7rucpuSudavpBMCTWYID\nvOMc/FBZC3V8qnXnRs0/wrGNohnUrM+jq4I/SVXufmWTZdnXaHwdkrgAzTrZWFR6\nwAVxgmxdCd9EybDQu7SeZqBwE3oeEtfc2OqRa9Ef5XJEGRoWC6CxbXFOganDbGzE\nMqBbPQf1AgMBAAECggEADtmaHCVQy53J6G/0UK5vdP96/HuDZ49ZjWGG+f3gcQWU\nV0Hla9rnXTk8/1Y9PNBrR/Z2+TJQ8yD2kXJU16znsOnoWqQBkEWjvDtqWAQrt7HC\neH2loOMU/hzTKnLBAqFmMMpQakv9SR/OIQ74T9QI+78XWXFkL+lNaj4NAS7JVi4J\nL32F7Ug9Xz2rEQ05ZUvt65HhusVCyaNI3FpEpIbYltqoLWIH0+7iqqv+4SGyEyrw\ngqePe5g4lxB8d8wO50YuqcxgA0DL1+c2Y7NScjQDiYc/RHep1FVRPZr0AAfhbW0y\nSCEZhdURk/xpZvIgJDTrC8KIqlosL6iqM6q32CFTZQKBgQDgqTChVw8XMBPlAr66\nHVAGQoY1ef8DRjeSfKGypoLAG92E1mnYns5PJHGWFrUWFPIrxuGo/hI2teBtCvPW\nmpVaG3iLbij7fDvuqZfRNxSWkvXK3RLUW8+m6pZSdflZ6R7LXIggLNXiY+EZ4vH6\noeJsnjdKQDc+MSMVC6UYPQh1twKBgQDIBXf5/0mE/1YDaB63ZWPtBSW/omX4NSpQ\n8He4g5yWlBzDGvgFMKSjKHn154gCPzZ57NKdf9cG3+optbeQPERGkB0zEdO1jOXO\nsihGMjhBXQrioM2UgOer3WQ3PryG3dtr0ZAcNw/zFmy5non13fjRS2SdMA0EAzfB\nz8//Y/sPswKBgQCpqJuE/A31YOVlSNFoE8LfN1XLBLpEar6E7YHfPEf5dBGxw4pj\ngGok8kylH7jZWDAaRzMbP+PZVTiKoH7MTikDx0MdaK+iW4uXDJQN9x6hJ5JfBNy3\nai5Cy12CIH2SHK6YvORACBvtv6e6uNwsfhxUEpeGh0Aww0LPHeArkcvVuQKBgBwN\n6E4AKGenCIFh0S0X43QTDMBcHsE5c732fFQ84XGdRIt49OCFehIIU1LSLpliFFn1\nhXThwV8NeOJwwlZQnaLoA7BuB6unH3RmOI/f61P/oM84jp0Nl3DblHrLKdYgt+3f\nbr8GWg5WTtmaCu+ZOpTgZjRF0Q2HBgMBCsNfWo9RAoGBAJVSDI6p9pMUwP37Vt89\nLD/A3YWCdbfPThPgHqFaBCUZ5Ay1pFZh3KZ8dn9RSPrMAWCedySlsf6Il9W7QDNG\nss0DsX9RFwpDQaaScrD9Wt7EkTGs57L1g+gj9gxx/WF652W68NUFzkBzhupspICO\n0aNfAtuaskfmDbRYy2R59/wk'
-  })
-await doc.loadInfo()
-const sheet = doc.sheetsById['1BtzptxQARvcTmY8M1OilCnciqD1JBEJkQ_--L5T1Ols']
-await sheet.loadCells('A1:B2')
-const cellA1 = sheet.getCell(0,0)
-const cellB2 = sheet.getCellByA1('B2')
-a1 = cellB2.value
-}
 
-const Tab = createBottomTabNavigator();
-const Device = {
-  width: Dimensions.get('window').width,
-  height: Dimensions.get('window').height
-}
-const styles = {
-  appbar: {
-    flexDirection: 'row', 
-    alignItems: 'center', 
-    paddingVertical: 0, 
-    paddingHorizontal: 8,
-    paddingBottom: 0,
-    position: 'absolute',
-    height: Device.height/10 
-  }
-}
+const D1 = [
+  {
+    id: 'a1',
+    post: 'Sports Secretary',
+      img:require('./images/mayank.jpg'),
+      name:'Mayank Dubey',
+      mobile:'8503936914',
+      email:'nilgiri.20@gmail.com',
+      color1:'#0047b3',
+      color2:'white',
+  },
+  {id: 'a2',
+      post: 'Mess Secretary',
+      img:require('./images/icon.jpg'),
+      name:'Name',
+      mobile:'9876543210',
+      email:'nilgiri.20@gmail.com',
+      color1:'#0047b3',
+      color2:'white',
 
-class FrontImage extends Component{
-  constructor(props) {
-    super(props);
-    this.state = { count: 1, uri: "https://images.shiksha.com/mediadata/images/1504610950phpzuhaTW.jpeg", icon1: 'checkbox-blank-circle', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle-outline'};
-  }
-  update_pos() {
-    var c = this.state.count + 1;
-    var str = new String
-    var i = new String
-    if(c > 4)
-      c = 1;
-    switch(c){
-      case 1: str = "https://images.shiksha.com/mediadata/images/1504610950phpzuhaTW.jpeg";
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle-outline'})
-              break;
-      case 2: str = "https://i2.wp.com/nilbest.org/activity/wp-content/uploads/2018/07/Dream_Team.jpg?resize=700%2C300&ssl=1";
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle-outline', icon2: 'checkbox-blank-circle', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle-outline'})
-              break;
-      case 3: str = "https://upload.wikimedia.org/wikipedia/en/a/a4/Indian_Institute_of_Technology_Delhi_logo.png";
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle-outline', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle', icon4: 'checkbox-blank-circle-outline'})
-              break;
-      case 4: str = "https://c.ndtvimg.com/2019-09/j7m1g8r8_iit-delhi_625x300_28_September_19.jpg";     
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle-outline', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle'})
-              break ;                  
-    }   
-  }
-  update_neg() {
-    var c = this.state.count - 1;
-    if(c < 1)
-      c = 4;
-    var str = new String  
-    switch(c){
-      case 1: str = "https://images.shiksha.com/mediadata/images/1504610950phpzuhaTW.jpeg";
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle-outline'})
-              break;
-      case 2: str = "https://i2.wp.com/nilbest.org/activity/wp-content/uploads/2018/07/Dream_Team.jpg?resize=700%2C300&ssl=1";
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle-outline', icon2: 'checkbox-blank-circle', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle-outline'})
-              break;
-      case 3: str = "https://upload.wikimedia.org/wikipedia/en/a/a4/Indian_Institute_of_Technology_Delhi_logo.png";
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle-outline', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle', icon4: 'checkbox-blank-circle-outline'})
-              break;
-      case 4: str = "https://c.ndtvimg.com/2019-09/j7m1g8r8_iit-delhi_625x300_28_September_19.jpg";     
-              this.setState({count: c, uri: str, icon1: 'checkbox-blank-circle-outline', icon2: 'checkbox-blank-circle-outline', icon3: 'checkbox-blank-circle-outline', icon4: 'checkbox-blank-circle'})
-              break ;                  
-    }   
-  }
+  },
+    {
+        id: 'a3',
+        post: 'House Secretary',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
 
-  render(){
-    return(
-     <View style = {{flexDirection: 'column', alignItems: 'center', justifyContent: 'space-between'}}> 
-      <View style = {{height: Device.height/2.8, width: Device.width, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', top: Device.height/45, left: 0}}>
-        <IconButton name = "chevron-left" size = {Device.height/24} onPress = {() => this.update_neg()}/>
-        <Image source = {{uri: this.state.uri}} style = {{height: Device.height/2.7, width: Device.width/1.3}} borderBottomRightRadius = {Device.height/30} borderBottomLeftRadius = {Device.height/30} borderTopRightRadius = {Device.height/30} borderTopLeftRadius = {Device.height/30}/>
-        <IconButton name = "chevron-right" size = {Device.height/24} onPress = {() => this.update_pos()}/>
-      <View style = {{flexDirection: 'row', alignItems: 'center'}}>
-        <Icon name = {this.state.icon1} style = {{top: Device.height/5.0, left: -Device.width/1.725}}/>
-        <Icon name = {this.state.icon2} style = {{top: Device.height/5.0, left: -Device.width/1.825}}/>
-        <Icon name = {this.state.icon3} style = {{top: Device.height/5.0, left: -Device.width/1.925}}/>
-        <Icon name = {this.state.icon4} style = {{top: Device.height/5.0, left: -Device.width/2.025}}/>
-      </View>  
-     </View>   
-      </View>  
-    )
-  }
-}
-function SettingsScreen() {
+    },
+  {
+    id: 'a4',
+      post: 'Maintainance Secretary',
+      img:require('./images/icon.jpg'),
+      name:'Name',
+      mobile:'9876543210',
+      email:'nilgiri.20@gmail.com',
+      color1:'#0047b3',
+      color2:'white',
+
+  },
+    {
+        id: 'a5',
+        post: 'Cultural Secretary',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+];
+
+const D3 = [
+    {
+        id: 'b1',
+        post: 'BSW rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+    {
+        id: 'b2',
+        post: 'BSW rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'b3',
+        post: 'Debating Rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+    {
+        id: 'b4',
+        post: 'Dance Rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },{
+        id: 'b5',
+        post: 'Music Rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+    {
+        id: 'b6',
+        post: 'Literature Rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+    {
+        id: 'b7',
+        post: 'Quiz Rep',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+];
+const D4 = [
+    {
+        id: 'c1',
+        post: 'Cricket Captain',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'c2',
+        post: 'Cricket Vice-Captain',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+
+    },
+    {
+        id: 'c3',
+        post: 'Football Captain',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'c4',
+        post: 'Football Vice-Captain',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+];
+const D2= [
+    {
+        id: 'B1',
+        post: 'Warden',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'B2',
+        post: 'Caretaker',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'B3',
+        post: 'Staff',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+];
+const D5= [
+    {
+        id: 'd1',
+        post: 'Mentor',
+        img:require('./images/icon.jpg'),
+        name:'Viraj Singh',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'd2',
+        post: 'Mentor',
+        img:require('./images/icon.jpg'),
+        name:'Hardik',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+    {
+        id: 'd3',
+        post: 'Mentor',
+        img:require('./images/icon.jpg'),
+        name:'Name',
+        mobile:'9876543210',
+        email:'nilgiri.20@gmail.com',
+        color1:'#0047b3',
+        color2:'white',
+    },
+];
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+
+    },
+    item: {
+        marginVertical: 8,
+        marginHorizontal: 8,height:150
+
+    },
+
+});
+
+function Item({ title }) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings!</Text>
-    </View>
+      <View style={styles.item}>
+        <View style={{marginLeft:75,flexGrow:1,borderColor:'black',borderWidth:3,borderBottomRightRadius:15,borderTopRightRadius:15}}>
+            <View style={{paddingVertical:3,paddingLeft:77,borderColor:'black',borderTopRightRadius:11,borderBottomWidth:3,backgroundColor:title.color1}}>
+                <Text style={{color:'white'}}>{title.post}</Text>
+            </View>
+            <View style={{flexGrow:1,backgroundColor:title.color2,borderBottomRightRadius:15}}>
+                <View style={{marginLeft:80,flexGrow:1}}>
+                    <View style={{justifyContent:'center',flexGrow:1,paddingLeft:10}}>
+                        <Text style={{textDecorationLine:'underline',textDecorationColor:'blue',textDecorationStyle:'solid',fontWeight:'bold'}}>
+                            {title.name}
+                        </Text>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center',flexGrow:1}}>
+                        <Image source={require('./images/mobile.jpg')} style={{borderRadius:12}}/>
+                        <View style={{paddingLeft:10}}>
+                            <Text>{title.mobile}</Text>
+                        </View>
+                    </View>
+                    <View style={{flexDirection:'row',alignItems:'center',flexGrow:1}}>
+                        <Image source={require('./images/email.jpg')}/>
+                        <View style={{paddingLeft:10}}>
+                            <Text>{title.email}</Text>
+                        </View>
+                    </View>
+                </View>
+            </View>
+        </View>
+          <Image source = {title.img}  style={{position:'absolute',height:150,width:150,borderRadius:150/2,borderColor:'black',borderWidth:3,resizeMode:'cover'}}/>
+      </View>
   );
 }
-class Announcement extends Component{
-  constructor(props){
-    super(props);
-    this.state = {isOutline: true, name: 'alert-decagram-outline'}
-  }
-  componentDidMount(){
-    setInterval(() => {
-    if(this.state.isOutline)
-      this.setState({isOutline: false, name: 'alert-decagram'})
-    else 
-      this.setState({isOutline: true, name: 'alert-decagram-outline'})}, 1000)
-  }
 
-  render(){
-    return(
-      <View style = {{alignItems: 'center', justifyContent: 'center', paddingLeft: Device.width/80, paddingRight: Device.width/80}}>
-        <Icon name = {this.state.name} size = {Device.height/25}  color = 'yellow'></Icon>
-      </View>
-    )
-  }
+function List({D}) {
+  return (
+      <FlatList
+            data={D}
+            renderItem={({ item }) => <Item title={item} />}
+            keyExtractor={item => item.id}
+         />
 
+  );
 }
-function NilgiriHome(){
-  return(
-     <ImageBackground source = {{uri: "https://i.pinimg.com/originals/f2/cb/31/f2cb313fe3f43a87d295d547b6bb03c0.jpg"}} style = {{height: Device.height, width: Device.width, flex: 1}}>
-       <View style={{flex: 1, flexDirection: 'column', alignItems: "center"}}>
-         <View style = {{left: -Device.width/2}}>
-          <Appbar style = {styles.appbar} barType = {"prominent dense"} backgroundImage = {<Image source = {{uri: 'https://visme.co/blog/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-02.jpg'}}/>}>
-             <View style = {{flex: 1,left: -Device.width/100}}>
-               <IconButton name = 'list' color = 'black' size = {Device.height/23} onPress = {() => console.log('onPress!')}/>
-             </View>
-             <View style = {{flex: 8, justifyContent: 'center', alignItems: 'center'}}>
-               <Text style = {{justifyContent: 'center', alignItems: 'center', fontSize: Device.height/27, color: "black", fontFamily: "Exo-ExtraBold", left: -Device.width/48}}>NILGIRI HOSTEL</Text>  
-             </View>
-          </Appbar>
-         </View>
-         <View style = {{height: Device.height, width: Device.width, flexDirection: "column", justifyContent: "space-evenly", alignItems: "center", position: 'absolute'}}>
-           <FrontImage/>
-           <View style = {{flexDirection: 'column', alignItems: 'stretch', padding: Device.height/60, top:-Device.height/25}}>
-             <View style = {{width: Device.width/1.2, height: Device.height/23, backgroundColor: 'firebrick', flexDirection: 'row', alignItems: 'center', borderRadius: Device.height/30, justifyContent: 'space-evenly'}}>
-               <Announcement/>
-               <View style = {{flex: 6, alignItems: 'center', justifyContent: 'center', left: Device.width/500}}>
-                 <Text style = {{color: 'yellow', fontFamily: 'Exo-Bold', fontSize: Device.height/30}}>ANNOUNCEMENTS</Text>
-               </View>
-               <Announcement/>
-              </View>
-              <View style = {{backgroundColor: 'white',flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'space-evenly', width: Device.width/1.4, left: Device.width/16, height: Device.height/4.2, borderBottomLeftRadius: Device.height/33, borderBottomRightRadius: Device.height/33, borderRightWidth: Device.width/70, borderBottomWidth: Device.width/70, borderLeftWidth: Device.width/70, borderBottomColor: 'firebrick', borderLeftColor: 'firebrick', borderRightColor: 'firebrick'}}>
-                <A href = "" style = {{fontSize: Device.height/42, fontWeight: 'bold', padding: Device.width/80, color: 'blue'}}>Announcement 1</A>
-                <A href = {a1} style = {{fontSize: Device.height/42, fontWeight: 'bold', padding: Device.width/80, color: 'blue'}}>Announcement 2</A>
-                <A href = "" style = {{fontSize: Device.height/42, fontWeight: 'bold', padding: Device.width/80, color: 'blue'}}>Announcement 3</A>
-                <A href = "" style = {{fontSize: Device.height/42, fontWeight: 'bold', padding: Device.width/80, color: 'black'}}>...</A>
-                <A href = "" style = {{fontSize: Device.height/42, fontWeight: 'bold', padding: Device.width/80, color: 'black'}}>...</A>
-              </View>
-           </View> 
-         </View>
+class Student extends Component{
+    constructor(props){
+        super(props);
+        this.state={
+            Data:this.props.data,
+            color1:'#0047b3',
+            color2:'white',
+            color3:'white',
+            color4:'white'
+        };
+    }
+    onpress1 = () => {this.setState({Data:D1,
+        color1:'#0047b3',
+        color2:'white',
+        color3:'white',
+        color4:'white'});}
+    onpress2 = () => {this.setState({Data:D3,
+        color1:'white',
+        color2:'#0047b3',
+        color3:'white',
+        color4:'white'});}
+    onpress3 = () => {this.setState({Data:D4,
+        color1:'white',
+        color2:'white',
+        color3:'#0047b3',
+        color4:'white'});}
+    onpress4 = () => {this.setState({Data:D5,
+        color1:'white',
+        color2:'white',
+        color3:'white',
+        color4:'#0047b3'});}
+        render(){
+    if(this.props.data === D2){
+        return(<List D={D2} />);}
+    return(<View style={{flex:1}}>
+        <View style={{marginVertical:50,marginHorizontal:15,borderColor:'#0047b3',borderRadius:35,borderWidth:4}}>
+            <View style={{flexDirection:'row'}}>
+                <TouchableNativeFeedback
+                    onPress={this.onpress1}
+                    background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
+                >
+                    <View style={{flexGrow:1,backgroundColor:this.state.color1,padding:20,justifyContent:'center',borderColor:'#0047b3',borderTopLeftRadius:31,borderBottomWidth:2,borderRightWidth:2}}><Text style={{textAlign:'center',fontWeight:'bold',color:this.state.color1 === '#0047b3' ? 'white' : '#0047b3'}}>Secretaries</Text>
+
+                    </View></TouchableNativeFeedback>
+
+                <TouchableNativeFeedback
+
+                    onPress={this.onpress2}
+                    background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
+                >
+                    <View style={{flexGrow:1,backgroundColor:this.state.color2,padding:20,justifyContent:'center',borderTopRightRadius:31}}><Text style={{textAlign:'center',color:this.state.color2 === '#0047b3' ? 'white' : '#0047b3',fontWeight:'bold'}}>BRCA Reps</Text>
+
+                    </View>
+                </TouchableNativeFeedback>
+
+            </View>
+            <View style={{flexDirection:'row'}}>
+                <TouchableNativeFeedback
+                    onPress={this.onpress3}
+                    background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
+                >
+                    <View style={{flexGrow:1,backgroundColor:this.state.color3,padding:18,justifyContent:'center',borderBottomLeftRadius:31}}><Text style={{textAlign:'center',color:this.state.color3 === '#0047b3' ? 'white' : '#0047b3',fontWeight:'bold'}}>Captains</Text>
+
+                    </View></TouchableNativeFeedback>
+
+                <TouchableNativeFeedback
+
+                    onPress={this.onpress4}
+                    background={Platform.OS === 'android' ? TouchableNativeFeedback.SelectableBackground() : ''}
+                >
+                    <View style={{flexGrow:1,backgroundColor:this.state.color4,padding:20,justifyContent:'center',borderColor:'#0047b3',borderBottomRightRadius:31,borderTopWidth:2,borderLeftWidth:2}}><Text style={{textAlign:'center',color:this.state.color4 === '#0047b3' ? 'white' : '#0047b3',fontWeight:'bold'}}>Mentors</Text>
+
+                    </View>
+                </TouchableNativeFeedback>
+
+            </View>
         </View>
-      </ImageBackground>  
-    )
-  }
+            <List  D = {this.state.Data}/>
+        </View>
 
-export default class App extends Component{
-  componentDidMount(){
-    main()
-  }
-  render(){
-  return(
-    
-    <SafeAreaProvider>
-    <SafeAreaView style = {{ elevation: 0, flex: 1}}>
-    <NavigationContainer>
-      <Tab.Navigator screenOptions = {({route}) => ({
-        tabBarIcon: ({focused, color, size}) => {
-          let iconName;
-          if(route.name === 'HOME'){
-            iconName = focused ? 'home-city' : 'home-city-outline';}
-            else if(route.name === 'INFO'){
-              iconName = focused ? 'information' : 'information-outline';
-            } else if(route.name === 'MENU'){
-              iconName = focused ? 'file-document' : 'file-document-outline';
-            }
-            return <Icon name = {iconName} size ={size} color = {color}/>
-          } 
-        }
-      )} 
-        tabBarOptions = {{
-          activeBackgroundColor: 'rgba(50,100,170,1.0)',
-          inactiveBackgroundColor: 'rgba(50,100,170,1.0)',
-          activeTintColor: 'yellow',
-          inactiveTintColor: 'white'
-        }}>
-        <Tab.Screen name = "HOME" component = {NilgiriHome} />
-        <Tab.Screen name = "MENU" component = {SettingsScreen}/>
-        <Tab.Screen name = "INFO" component = {SettingsScreen}/>
-      </Tab.Navigator>  
-    </NavigationContainer>
-    </SafeAreaView>
-    </SafeAreaProvider>
-  )
-}
-}
+    );
+    }}
+
+
+export default class App extends Component {
+    constructor(props){
+        super(props);
+        this.state={
+            Da:D1,
+            color1:'bold',
+            color2:'normal',
+            color3:{borderColor:'white',borderBottomWidth:5}
+        };
+    }
+    Onpress1 = () => {this.setState({Da:D1,color1:'bold',
+        color2:'normal'});}
+        Onpress2 = () => {this.setState({Da:D2,color1:'normal',color2:'bold'});}
+
+    render()
+    {return(<View style={{flex:1}}>
+            <View>
+            <StatusBar
+                backgroundColor={'#006622'}
+                barStyle={'light-content'}/>
+        </View>
+
+        <ScrollView style={styles.container}>
+
+      <View style={{flexDirection:'row',justifyContent:'center'}}>
+          <TouchableWithoutFeedback
+              onPress={this.Onpress1}
+              >
+              <View style={[{flexGrow:1,backgroundColor:'#0047b3',padding:10},this.state.color1 === 'bold' ? this.state.color3 : {}]}><Text style={{textAlign:'center',color:'white',fontWeight:this.state.color1}}>Student</Text>
+                  <Text style={{textAlign:'center',fontWeight:this.state.color1,color:'white'}}>Body</Text>
+              </View></TouchableWithoutFeedback>
+
+          <TouchableWithoutFeedback
+
+              onPress={this.Onpress2}
+              >
+              <View style={[{flexGrow:1,backgroundColor:'#0047b3',padding:10},this.state.color2 === 'bold' ? this.state.color3 : {}]}><Text style={{textAlign:'center',fontWeight:this.state.color2,color:'white'}}>Administrative</Text>
+                  <Text style={{textAlign:'center',fontWeight:this.state.color2,color:'white'}}>Staff</Text>
+              </View>
+          </TouchableWithoutFeedback>
+
+      </View>
+            <Student data = {this.state.Da}/>
+    </ScrollView>
+        </View>
+
+
+);
+}}
+
